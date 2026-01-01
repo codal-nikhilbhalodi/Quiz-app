@@ -15,7 +15,7 @@ class Options extends Component {
       <div className="options-wrapper">
         {options.map((option, index) => {
           const isChecked = ansSelected[currentQuestion]
-            ? ansSelected[currentQuestion] === option
+            ? ansSelected[currentQuestion]["option"] === option
             : selectedOption === option;
 
           return (

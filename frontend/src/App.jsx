@@ -3,43 +3,61 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Question from "./Components/Question";
-import qBank from "./Components/QuestionBank";
 import Score from "./Components/Score";
 import "./App.css";
+import { getQuestions, submitQuiz } from "./api/quizApi";
+
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            questionBank: qBank,
+            questionBank: [],
             currentQuestion: 0,
             selectedOption: "",
             score: 0,
             quizEnd: false,
             ansSelected: {},
+            loading: true,
         };
     }
+    componentDidMount() {
+        this.loadQuestions();
+    }
+
+    loadQuestions = async () => {
+        try {
+            const res = await getQuestions();
+            this.setState({
+                questionBank: res.data,
+                loading: false,
+            });
+        } catch (error) {
+            console.error("Failed to load questions", error);
+        }
+    };
 
     handleOptionChange = (e) => {
         const { questionBank, currentQuestion, selectedOption, score, ansSelected } = this.state;
+        const questionId = questionBank[currentQuestion].id;
         this.setState({ selectedOption: e.target.value });
-        ansSelected[currentQuestion] = e.target.value;
+        ansSelected[currentQuestion] = { id: questionId, option: e.target.value }
     };
 
-    handleFormSubmit = (e) => {
-        e.preventDefault(); 
-        this.checkAnswer();
-        this.setState({ quizEnd: true });
-    };
+    handleFormSubmit = async (e) => {
+        e.preventDefault();
 
-    checkAnswer = () => {
-        const { questionBank, currentQuestion, selectedOption, score, ansSelected } = this.state;
-        for (let i = 0; i < questionBank.length; i++) {
-            if (ansSelected[i] === questionBank[i].answer) {
-                this.setState((prevState) => ({ score: prevState.score + 1 }));
-            }
+        try {
+            const res = await submitQuiz(this.state.ansSelected);
+            this.setState({
+                score: res.data.score,
+                quizEnd: true,
+            });
+        } catch (error) {
+            console.error("Quiz submission failed", error);
         }
     };
+
 
     handleNextQuestion = () => {
         const { questionBank, currentQuestion, selectedOption, ansSelected } = this.state;
@@ -47,23 +65,24 @@ class App extends Component {
             alert("Please select an option");
             return;
         }
-        ansSelected[currentQuestion] = selectedOption;
+        ansSelected[questionBank[currentQuestion]["id"]] = selectedOption;
         this.setState((prevState) => ({
             currentQuestion: prevState.currentQuestion + 1,
-            selectedOption: ansSelected[currentQuestion + 1] || "",
+            selectedOption: ansSelected[currentQuestion + 1]["option"] || "",
         }));
     };
     handlePrev = () => {
         const { questionBank, currentQuestion, selectedOption, ansSelected } = this.state;
         this.setState((prev) => ({
             currentQuestion: prev.currentQuestion - 1,
-            selectedOption: ansSelected[currentQuestion - 1] || "",
+            selectedOption: ansSelected[currentQuestion - 1]["option"] || "",
         }));
     };
 
     render() {
-        const { questionBank, currentQuestion, selectedOption, score, quizEnd, ansSelected } =
-            this.state;
+        const { questionBank, currentQuestion, selectedOption, score, quizEnd, ansSelected, loading} =
+        this.state;
+        if (loading) return <h3>Loading...</h3>;
         return (
             <div className="App d-flex flex-column align-items-center justify-content-center">
                 <h1 className="app-title">QUIZ APP</h1>

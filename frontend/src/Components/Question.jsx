@@ -23,7 +23,7 @@ class Question extends Component {
             Question {currentQuestion + 1} / {questionBank.length}
           </h4>
 
-          <h5 className="question-text">{question.question}</h5>
+          <h5 className="question-text">{question.text}</h5>
 
           <form onSubmit={onSubmit}>
             <Options
