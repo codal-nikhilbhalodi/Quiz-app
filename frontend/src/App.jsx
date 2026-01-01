@@ -6,6 +6,7 @@ import Question from "./Components/Question";
 import Score from "./Components/Score";
 import "./App.css";
 import { getQuestions, submitQuiz } from "./api/quizApi";
+import Loader from "./Components/Loader";
 
 
 class App extends Component {
@@ -82,7 +83,7 @@ class App extends Component {
     render() {
         const { questionBank, currentQuestion, selectedOption, score, quizEnd, ansSelected, loading} =
         this.state;
-        if (loading) return <h3>Loading...</h3>;
+        if (loading) return <Loader />;
         return (
             <div className="App d-flex flex-column align-items-center justify-content-center">
                 <h1 className="app-title">QUIZ APP</h1>
