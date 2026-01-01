@@ -22,3 +22,117 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# =========================
+# Virtual Environments
+# =========================
+venv/
+.env/
+.venv/
+env/
+ENV/
+
+# =========================
+# Distribution / Packaging
+# =========================
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# =========================
+# Installer logs
+# =========================
+pip-log.txt
+pip-delete-this-directory.txt
+
+# =========================
+# Unit test / coverage
+# =========================
+.coverage
+.coverage.*
+.cache/
+htmlcov/
+.pytest_cache/
+nosetests.xml
+coverage.xml
+
+# =========================
+# Django
+# =========================
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# =========================
+# Flask / FastAPI
+# =========================
+instance/
+.webassets-cache/
+
+# =========================
+# Environment variables
+# =========================
+.env.*
+!.env.example
+
+# =========================
+# IDE / Editor
+# =========================
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# =========================
+# OS
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Jupyter Notebook
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# mypy / type checking
+# =========================
+.mypy_cache/
+.dmypy.json
+.pyre/
+
+# =========================
+# PyCharm
+# =========================
+*.iml
+
+# =========================
+# Logs
+# =========================
+logs/
+*.log
+
+# =========================
+# Secrets / credentials
+# =========================
+*.pem
+*.key
+*.crt
+
+# =========================
+# Temporary files
+# =========================
+*.tmp
+*.swp
+*.bak
