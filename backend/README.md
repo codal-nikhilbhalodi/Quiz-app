@@ -48,5 +48,5 @@ pip install -r requirements.txt
 ```
 5. **Running the Server**
 ```bash
-uvicorn main:app --reload
+uvicorn app.main:app --reload
 ```
